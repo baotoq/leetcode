@@ -1,4 +1,4 @@
-package majority_element
+package max_profit
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -6,15 +6,15 @@ import (
 )
 
 func Test1(t *testing.T) {
-	arr := []int{2, 2, 1, 1, 1, 2, 2}
-	act := majorityElement(arr)
+	arr := []int{7, 1, 5, 3, 6, 4}
+	act := maxProfit(arr)
 
-	assert.Equal(t, 2, act)
+	assert.Equal(t, 5, act)
 }
 
 func Test2(t *testing.T) {
-	arr := []int{3, 2, 3}
-	act := majorityElement(arr)
+	arr := []int{7, 6, 4, 3, 1}
+	act := maxProfit(arr)
 
-	assert.Equal(t, 3, act)
+	assert.Equal(t, 0, act)
 }

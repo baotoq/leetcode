@@ -1,24 +1,16 @@
-package majority_element
+package max_profit
 
-import (
-	"maps"
-	"slices"
-	"sort"
-)
+// https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/?envType=study-plan-v2&envId=top-interview-150
 
-// https://leetcode.com/problems/majority-element/?envType=study-plan-v2&envId=top-interview-150
+func maxProfit(prices []int) int {
+	minPrice := prices[0]
+	profit := 0
 
-func majorityElement(nums []int) int {
-	appearCount := make(map[int]int)
+	for _, price := range prices {
+		minPrice = min(minPrice, price)
 
-	for _, num := range nums {
-		appearCount[num]++
+		profit = max(profit, price-minPrice)
 	}
 
-	keys := slices.Collect(maps.Keys(appearCount))
-	sort.Slice(keys, func(i, j int) bool {
-		return appearCount[keys[i]] > appearCount[keys[j]]
-	})
-
-	return keys[0]
+	return profit
 }
