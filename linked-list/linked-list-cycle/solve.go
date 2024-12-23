@@ -47,23 +47,18 @@ func hasCycle2(head *ListNode) bool {
 	return false
 }
 
-func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
-	curr := &ListNode{}
-	r := curr
+func reverseList(head *ListNode) *ListNode {
+	var prev, curr, next *ListNode
+	curr = head
 
-	p1, p2 := list1, list2
-	for p1 != nil && p2 != nil {
-		if p1.Val < p2.Val {
-			curr = p1
-			p1 = p1.Next
-		} else {
-			curr = p2
-			p2 = p2.Next
-		}
+	for curr != nil {
+		next = curr.Next
 
-		r = curr
-		curr = curr.Next
+		curr.Next = prev
+
+		prev = curr
+		curr = next
 	}
 
-	return r
+	return prev
 }
