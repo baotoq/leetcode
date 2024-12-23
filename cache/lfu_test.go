@@ -1,4 +1,4 @@
-package lfu_cache
+package cache
 
 import (
 	"github.com/stretchr/testify/assert"
