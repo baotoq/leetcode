@@ -28,3 +28,21 @@ func hasCycle(head *ListNode) bool {
 	// If we exit the loop, there is no cycle
 	return false
 }
+
+func hasCycle2(head *ListNode) bool {
+	visited := make(map[*ListNode]struct{})
+
+	current := head
+	for current != nil {
+		// If the node is already in the map, we found a cycle
+		if _, ok := visited[current]; ok {
+			return true
+		}
+		// Mark the node as visited
+		visited[current] = struct{}{}
+		current = current.Next
+	}
+
+	// If we reach here, there is no cycle
+	return false
+}
