@@ -2,93 +2,55 @@ package cache
 
 type LinkedList struct {
 	head   *Node
+	tail   *Node
 	length int
 }
 
 type Node struct {
-	next *Node
-	data int
+	next  *Node
+	prev  *Node
+	value int
+	key   int
 }
 
 func NewLinkedList() LinkedList {
 	return LinkedList{}
 }
 
-func (l *LinkedList) AddFirst(data int) {
-	node := &Node{data: data}
-
-	if l.head != nil {
+func (l *LinkedList) AddFirst(node *Node) {
+	if l.head == nil {
+		// If the list is empty, both head and tail point to the new node
+		l.head = node
+		l.tail = node
+	} else {
+		// Otherwise, add the new node before the current head
 		node.next = l.head
+		l.head.prev = node
+		l.head = node
 	}
-
-	l.head = node
 	l.length++
 }
 
 func (l *LinkedList) Remove(node *Node) {
-	if l.head == node {
+	if node == l.head {
+		// If the node is the head, update the head pointer
 		l.head = node.next
-		l.length--
-		return
 	}
-
-	head := l.head
-	for head.next != nil {
-		if head.next == node {
-			head.next = node.next
-			l.length--
-			return
-		}
-		head = head.next
+	if node == l.tail {
+		// If the node is the tail, update the tail pointer
+		l.tail = node.prev
 	}
-}
-
-func (l *LinkedList) RemoveByData(data int) {
-	if l.head == nil {
-		return
+	if node.prev != nil {
+		node.prev.next = node.next
 	}
-
-	if l.head.data == data {
-		l.head = l.head.next
-		l.length--
-		return
+	if node.next != nil {
+		node.next.prev = node.prev
 	}
-
-	head := l.head
-	for head.next != nil {
-		if head.next.data == data {
-			head.next = head.next.next
-			l.length--
-			return
-		}
-		head = head.next
-	}
-}
-
-func (l *LinkedList) RemoveFirst() {
-	l.Remove(l.head)
-}
-
-func (l *LinkedList) RemoveLast() {
-	head := l.head
-	for head.next != nil {
-		head = head.next
-	}
-	l.Remove(head)
-}
-
-func (l *LinkedList) Length() int {
-	return l.length
-}
-
-func (l *LinkedList) Head() *Node {
-	return l.head
+	node.prev = nil
+	node.next = nil
+	l.length--
 }
 
 func (l *LinkedList) Last() *Node {
-	head := l.head
-	for head.next != nil {
-		head = head.next
-	}
-	return head
+	return l.tail
 }
